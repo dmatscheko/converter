@@ -32,6 +32,20 @@
         .result p {
             margin: 5px 0;
         }
+        /* Ensure textareas are selectable but not editable */
+        textarea.output {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            resize: none;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            pointer-events: auto;
+            user-select: text;
+        }
+        textarea.output:focus {
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -41,20 +55,24 @@
     <textarea id="encoded-input" placeholder="Paste the encoded message here..."></textarea>
     <button onclick="decodeMessage()">Decode</button>
     <div id="decode-result" class="result">
-        <p><strong>Encoded message:</strong> <span id="encoded-msg"></span></p>
+        <p><strong>Encoded message:</strong></p>
+        <pre id="encoded-msg"></pre>
         <p><strong>Code points:</strong></p>
         <pre id="encoded-codepoints"></pre>
-        <p><strong>Decoded message:</strong> <span id="decoded-msg"></span></p>
+        <p><strong>Decoded message:</strong></p>
+        <textarea id="decoded-msg" class="output"></textarea>
     </div>
 
     <h2>Encode Plain Message</h2>
     <textarea id="plain-input" placeholder="Type the plain message here..."></textarea>
     <button onclick="encodeMessage()">Encode</button>
     <div id="encode-result" class="result">
-        <p><strong>Plain message:</strong> <span id="plain-msg"></span></p>
+        <p><strong>Plain message:</strong></p>
+        <pre id="plain-msg"></pre>
         <p><strong>Code points:</strong></p>
         <pre id="plain-codepoints"></pre>
-        <p><strong>Encoded message:</strong> <span id="encoded-output"></span></p>
+        <p><strong>Encoded message:</strong></p>
+        <textarea id="encoded-output" class="output"></textarea>
     </div>
 
     <script>
@@ -101,8 +119,7 @@
             const codePoints = getCodePoints(encoded);
             document.getElementById('encoded-msg').textContent = encoded;
             document.getElementById('encoded-codepoints').textContent = codePoints;
-            fullyDecodedMessage = decoded;
-            document.getElementById('decoded-msg').textContent = decoded;
+            document.getElementById('decoded-msg').value = decoded;
         }
 
         function encodeMessage() {
@@ -111,7 +128,7 @@
             const codePoints = getCodePoints(plain);
             document.getElementById('plain-msg').textContent = plain;
             document.getElementById('plain-codepoints').textContent = codePoints;
-            document.getElementById('encoded-output').textContent = encoded;
+            document.getElementById('encoded-output').value = encoded;
         }
     </script>
 </body>
